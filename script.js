@@ -1,146 +1,81 @@
-// Three.js Scene Setup
-let scene, camera, renderer, particles = [];
-let mouseX = 0, mouseY = 0;
-let targetMouseX = 0, targetMouseY = 0;
-
-function initThreeJS() {
+// Spectrogram-style animated canvas
+function initSpectrogramCanvas() {
   const canvas = document.getElementById('canvas-bg');
   const hero = document.getElementById('hero');
 
   if (!canvas || !hero) return;
 
+  const ctx = canvas.getContext('2d');
   const width = hero.clientWidth;
   const height = hero.clientHeight;
 
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
+  canvas.width = width;
+  canvas.height = height;
 
-  camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-  camera.position.z = 60;
-
-  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setSize(width, height);
-  renderer.setPixelRatio(window.devicePixelRatio);
-
-  createAbstractElements();
-
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // Smooth mouse following
-    mouseX += (targetMouseX - mouseX) * 0.05;
-    mouseY += (targetMouseY - mouseY) * 0.05;
-
-    particles.forEach((particle) => {
-      particle.rotation.x += particle.velocityX;
-      particle.rotation.y += particle.velocityY;
-      particle.rotation.z += particle.velocityZ;
-
-      // Mouse interaction: particles follow mouse with lag
-      particle.position.x += (mouseX * 0.03 - particle.position.x) * 0.03;
-      particle.position.y += (-mouseY * 0.03 - particle.position.y) * 0.03;
-    });
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    const newWidth = hero.clientWidth;
-    const newHeight = hero.clientHeight;
-    camera.aspect = newWidth / newHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(newWidth, newHeight);
-  });
-
-  // Track mouse movement
-  document.addEventListener('mousemove', (e) => {
-    targetMouseX = e.clientX;
-    targetMouseY = e.clientY;
-  });
-}
-
-function createAbstractElements() {
-  const colors = [0x00ffff, 0xffff00, 0xff00ff, 0x00ff7f, 0xb000ff];
-  const geometries = [
-    new THREE.IcosahedronGeometry(3, 5),
-    new THREE.OctahedronGeometry(3),
-    new THREE.TetrahedronGeometry(3.5),
-    new THREE.BoxGeometry(3.5, 3.5, 3.5),
-    new THREE.DodecahedronGeometry(2.5),
+  let time = 0;
+  const numBars = 60;
+  const colors = [
+    '#7c3aed', // violet
+    '#0369a1', // sky blue
+    '#00d9ff', // cyan
+    '#10b981', // emerald
   ];
 
-  for (let i = 0; i < 7; i++) {
-    const geometry = geometries[Math.floor(Math.random() * geometries.length)];
-    const color = colors[Math.floor(Math.random() * colors.length)];
+  function drawSpectrogram() {
+    // Clear with semi-transparent white
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+    ctx.fillRect(0, 0, width, height);
 
-    const material = new THREE.MeshPhongMaterial({
-      color: color,
-      emissive: color,
-      emissiveIntensity: 0.6,
-      shininess: 100,
-      wireframe: Math.random() > 0.4,
-    });
+    // Draw animated frequency bars
+    const barWidth = width / numBars;
 
-    const particle = new THREE.Mesh(geometry, material);
+    for (let i = 0; i < numBars; i++) {
+      // Create wave-like motion
+      const frequency = Math.sin(time * 0.005 + (i / numBars) * Math.PI * 2) * 0.5 + 0.5;
+      const amplitude = Math.sin(time * 0.003 + (i / numBars) * Math.PI) * 0.3 + 0.7;
 
-    particle.position.x = (Math.random() - 0.5) * 120;
-    particle.position.y = (Math.random() - 0.5) * 120;
-    particle.position.z = (Math.random() - 0.5) * 60;
+      // Vary height based on frequency
+      const barHeight = (frequency * amplitude) * height * 0.6;
 
-    particle.velocityX = (Math.random() - 0.5) * 0.015;
-    particle.velocityY = (Math.random() - 0.5) * 0.015;
-    particle.velocityZ = (Math.random() - 0.5) * 0.015;
+      // Color based on frequency
+      const colorIndex = Math.floor((frequency * (colors.length - 1)));
+      ctx.fillStyle = colors[colorIndex];
 
-    scene.add(particle);
-    particles.push(particle);
+      // Opacity varies with motion
+      ctx.globalAlpha = frequency * 0.6 + 0.2;
+
+      // Draw bar from center outward
+      const centerY = height / 2;
+      ctx.fillRect(i * barWidth, centerY - barHeight / 2, barWidth - 2, barHeight);
+    }
+
+    ctx.globalAlpha = 1;
+
+    // Draw subtle waveform lines
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.lineWidth = 1;
+
+    for (let y = 0; y < height; y += 40) {
+      ctx.beginPath();
+      for (let x = 0; x < width; x += 10) {
+        const wave = Math.sin((x + time * 0.1) * 0.01 + y * 0.003) * 20;
+        const yPos = y + wave;
+        if (x === 0) ctx.moveTo(x, yPos);
+        else ctx.lineTo(x, yPos);
+      }
+      ctx.stroke();
+    }
+
+    time++;
+    requestAnimationFrame(drawSpectrogram);
   }
 
-  // Enhanced lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-  scene.add(ambientLight);
+  drawSpectrogram();
 
-  const pointLight1 = new THREE.PointLight(0x00ffff, 1.2, 800);
-  pointLight1.position.set(100, 100, 80);
-  scene.add(pointLight1);
-
-  const pointLight2 = new THREE.PointLight(0xff00ff, 1, 800);
-  pointLight2.position.set(-100, -100, 80);
-  scene.add(pointLight2);
-
-  const pointLight3 = new THREE.PointLight(0xffff00, 0.8, 600);
-  pointLight3.position.set(0, 0, 120);
-  scene.add(pointLight3);
-
-  const pointLight4 = new THREE.PointLight(0x00ff7f, 0.6, 600);
-  pointLight4.position.set(100, -100, 0);
-  scene.add(pointLight4);
-}
-
-// Scroll animations
-function setupScrollAnimations() {
-  const options = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, options);
-
-  document.querySelectorAll('section').forEach(section => {
-    observer.observe(section);
-  });
-
-  document.querySelectorAll('.portfolio-item').forEach((item, index) => {
-    item.style.animation = `fadeInSection 0.8s ease-out ${0.1 * index}s both`;
+  // Handle resize
+  window.addEventListener('resize', () => {
+    canvas.width = hero.clientWidth;
+    canvas.height = hero.clientHeight;
   });
 }
 
@@ -171,44 +106,22 @@ function setupMobileMenu() {
   });
 }
 
-// Active nav highlighting
-function setupActiveNav() {
-  const currentPath = window.location.pathname;
+// Smooth scroll and active nav
+function setupNav() {
   const navLinks = document.querySelectorAll('nav a');
+  const currentPath = window.location.pathname;
 
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
-    if (href && href !== '#') {
-      if ((currentPath.includes('index.html') || currentPath.endsWith('/') || currentPath.includes('vlad-panaite-portfolio')) && (href === '#about' || href === 'index.html')) {
-        link.classList.add('active');
-      } else if (currentPath.includes(href.replace('.html', ''))) {
-        link.classList.add('active');
-      }
+    if (href && currentPath.includes(href.replace('.html', ''))) {
+      link.style.opacity = '0.5';
     }
   });
 }
 
-// Add glow effect on mouse move
-function setupMouseGlow() {
-  document.addEventListener('mousemove', (e) => {
-    const links = document.querySelectorAll('a, button, .portfolio-item');
-    links.forEach(link => {
-      const rect = link.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-        link.style.transform = `translate(0, 0)`;
-      }
-    });
-  });
-}
-
-// Initialize on DOM ready
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  initThreeJS();
+  initSpectrogramCanvas();
   setupMobileMenu();
-  setupActiveNav();
-  setupScrollAnimations();
-  setupMouseGlow();
+  setupNav();
 });

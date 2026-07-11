@@ -1,136 +1,138 @@
-// Wave oscilloscope effect
-const canvas = document.getElementById('waveCanvas');
-const ctx = canvas.getContext('2d');
+// Three.js immersive scene
+let scene, camera, renderer, particles = [];
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function initThreeJS() {
+  const container = document.getElementById('canvas-container');
 
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-let targetMouseX = mouseX;
-let targetMouseY = mouseY;
+  // Scene setup
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x000000);
+  scene.fog = new THREE.Fog(0x000000, 150, 1000);
 
-let time = 0;
-const waveData = new Array(300).fill(0);
+  // Camera setup
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 60;
 
-// Smooth mouse tracking
-document.addEventListener('mousemove', (e) => {
-  targetMouseX = e.clientX;
-  targetMouseY = e.clientY;
-});
+  // Renderer setup
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
 
-// Initialize wave data
-function initWaveData() {
-  for (let i = 0; i < waveData.length; i++) {
-    waveData[i] = Math.sin((i / waveData.length) * Math.PI * 4) * 30;
+  // Create particles
+  createImmersiveParticles();
+
+  // Add lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+
+  const pointLight1 = new THREE.PointLight(0x6666ff, 1, 500);
+  pointLight1.position.set(100, 100, 100);
+  pointLight1.castShadow = true;
+  scene.add(pointLight1);
+
+  const pointLight2 = new THREE.PointLight(0xff66ff, 0.8, 400);
+  pointLight2.position.set(-100, -100, 50);
+  scene.add(pointLight2);
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Smooth mouse tracking
+    mouseX += (targetMouseX - mouseX) * 0.08;
+    mouseY += (targetMouseY - mouseY) * 0.08;
+
+    // Rotate and animate particles
+    particles.forEach((particle, i) => {
+      particle.rotation.x += particle.velocityX;
+      particle.rotation.y += particle.velocityY;
+      particle.rotation.z += particle.velocityZ;
+
+      // Follow mouse
+      particle.position.x += (mouseX * 0.08 - particle.position.x) * 0.03;
+      particle.position.y += (-mouseY * 0.08 - particle.position.y) * 0.03;
+
+      // Gentle bobbing
+      particle.position.z += Math.sin(Date.now() * 0.001 + i) * 0.01;
+    });
+
+    renderer.render(scene, camera);
   }
+
+  animate();
+
+  // Handle resize
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+  });
+
+  // Track mouse
+  document.addEventListener('mousemove', (e) => {
+    targetMouseX = (e.clientX / window.innerWidth) * 100 - 50;
+    targetMouseY = (e.clientY / window.innerHeight) * 100 - 50;
+  });
 }
 
-function drawWave() {
-  // Smooth mouse following
-  mouseX += (targetMouseX - mouseX) * 0.1;
-  mouseY += (targetMouseY - mouseY) * 0.1;
-
-  // Clear canvas
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Update wave data based on mouse
-  const influence = (canvas.width / 2 - Math.abs(mouseX - canvas.width / 2)) / (canvas.width / 2);
-  const verticalInfluence = Math.max(0, 1 - Math.abs(mouseY - canvas.height / 2) / (canvas.height / 2));
-
-  for (let i = 0; i < waveData.length; i++) {
-    const baseWave = Math.sin((i / waveData.length) * Math.PI * 4 + time * 0.05) * 40;
-    const mouseInfluence = Math.sin(time * 0.1 + i * 0.1) * influence * verticalInfluence * 80;
-    waveData[i] = baseWave + mouseInfluence;
-  }
-
-  // Draw multiple waves with different phases
-  const waves = [
-    { offset: 0, color: 'rgba(0, 102, 255, 0.6)', y: canvas.height / 2 - 80 },
-    { offset: Math.PI / 2, color: 'rgba(0, 102, 255, 0.4)', y: canvas.height / 2 },
-    { offset: Math.PI, color: 'rgba(0, 102, 255, 0.2)', y: canvas.height / 2 + 80 }
+function createImmersiveParticles() {
+  const colors = [0x6666ff, 0xff66ff, 0x66ffff];
+  const geometries = [
+    new THREE.IcosahedronGeometry(2, 4),
+    new THREE.OctahedronGeometry(2.5),
+    new THREE.TetrahedronGeometry(3),
+    new THREE.SphereGeometry(2, 16, 16),
   ];
 
-  waves.forEach(wave => {
-    ctx.strokeStyle = wave.color;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
+  for (let i = 0; i < 50; i++) {
+    const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
 
-    for (let i = 0; i < waveData.length; i++) {
-      const x = (i / waveData.length) * canvas.width;
-      const y = wave.y + Math.sin(time * 0.05 + i * 0.05 + wave.offset) * 50 +
-                waveData[i] * verticalInfluence;
+    const material = new THREE.MeshPhongMaterial({
+      color: color,
+      emissive: color,
+      emissiveIntensity: 0.4,
+      shininess: 100,
+      wireframe: Math.random() > 0.7,
+    });
 
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    }
+    const particle = new THREE.Mesh(geometry, material);
 
-    ctx.stroke();
-  });
+    particle.position.x = (Math.random() - 0.5) * 200;
+    particle.position.y = (Math.random() - 0.5) * 200;
+    particle.position.z = (Math.random() - 0.5) * 100;
 
-  // Draw center line
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(0, canvas.height / 2);
-  ctx.lineTo(canvas.width, canvas.height / 2);
-  ctx.stroke();
+    particle.velocityX = (Math.random() - 0.5) * 0.008;
+    particle.velocityY = (Math.random() - 0.5) * 0.008;
+    particle.velocityZ = (Math.random() - 0.5) * 0.008;
 
-  time++;
-  requestAnimationFrame(drawWave);
+    particle.scale.set(Math.random() * 0.6 + 0.3, Math.random() * 0.6 + 0.3, Math.random() * 0.6 + 0.3);
+    particle.castShadow = true;
+    particle.receiveShadow = true;
+
+    scene.add(particle);
+    particles.push(particle);
+  }
 }
 
-// Handle window resize
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+// Audio autoplay
+document.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('bgMusic');
+  audio.volume = 0.3; // Set volume to 30%
+
+  // Try to play, catch errors
+  audio.play().catch(err => {
+    console.log('Autoplay prevented:', err);
+  });
 });
 
-// Tooltip interactions
-function setupTooltips() {
-  const zones = document.querySelectorAll('.zone');
-  const tooltip = document.getElementById('tooltip');
-  const tooltipText = document.querySelector('.tooltip-text');
-
-  zones.forEach(zone => {
-    zone.addEventListener('mouseenter', () => {
-      const info = zone.dataset.info;
-      tooltipText.textContent = info;
-      tooltip.classList.add('active');
-    });
-
-    zone.addEventListener('mousemove', (e) => {
-      tooltip.style.left = (e.clientX + 20) + 'px';
-      tooltip.style.top = (e.clientY + 20) + 'px';
-    });
-
-    zone.addEventListener('mouseleave', () => {
-      tooltip.classList.remove('active');
-    });
-  });
-}
-
-// Navigation
-function setupNavigation() {
-  const links = document.querySelectorAll('.nav-link');
-
-  links.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      // TODO: Navigate to sections
-    });
-  });
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  initWaveData();
-  drawWave();
-  setupTooltips();
-  setupNavigation();
+// CTA button functionality
+document.querySelector('.cta').addEventListener('click', () => {
+  document.getElementById('sound-design').scrollIntoView({ behavior: 'smooth' });
 });

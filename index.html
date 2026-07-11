@@ -3,48 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vlad Panaite | Sound Design & Composition</title>
+  <title>Vlad Panaite | Sound Designer & Composer</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="waveCanvas"></canvas>
+  <audio id="bgMusic" autoplay loop>
+    <source src="assets/audio/theme.mp3" type="audio/mpeg">
+  </audio>
 
-  <div class="container">
+  <div id="canvas-container"></div>
+
+  <div class="ui-content">
     <header>
       <div class="logo">VP</div>
       <nav>
-        <a href="#sound-design" class="nav-link">Sound Design</a>
-        <a href="#composition" class="nav-link">Composition</a>
-        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#sound-design">Sound Design</a>
+        <a href="#composition">Composition</a>
+        <a href="#contact">Contact</a>
       </nav>
     </header>
 
     <section class="hero">
-      <h1>Vlad Panaite</h1>
-      <p class="subtitle">Sound Designer & Composer</p>
-      <p class="description">Interactive audio design, composition, and sonic environments</p>
+      <div class="hero-content">
+        <h1>Vlad Panaite</h1>
+        <p class="subtitle">Sound Designer & Composer</p>
+        <p class="description">Crafting immersive sonic experiences for interactive media</p>
+        <button class="cta">Explore Portfolio</button>
+      </div>
+    </section>
 
-      <div class="zones">
-        <div class="zone" data-info="Sound Design | Games & Interactive | 3 Video Projects">
-          <div class="zone-number">01</div>
-          <div class="zone-title">SOUND DESIGN</div>
+    <section id="sound-design" class="portfolio-section">
+      <h2>Sound Design</h2>
+      <p>Cinematic soundscaping, interactive audio, and adaptive music systems</p>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <h3>Cinematic & Game Reel</h3>
+          <iframe src="https://www.youtube.com/embed/SUxWWOyYUNM" allowfullscreen></iframe>
         </div>
-        <div class="zone" data-info="Composition | Original Music | .Pierrot. Project">
-          <div class="zone-number">02</div>
-          <div class="zone-title">COMPOSITION</div>
+        <div class="portfolio-item">
+          <h3>Plyphone</h3>
+          <iframe src="https://www.youtube.com/embed/Rz39gmXcXxc" allowfullscreen></iframe>
         </div>
-        <div class="zone" data-info="London & Rome | Available for Commissions">
-          <div class="zone-number">03</div>
-          <div class="zone-title">CONTACT</div>
+        <div class="portfolio-item">
+          <h3>Interactive Audio</h3>
+          <iframe src="https://www.youtube.com/embed/78LcDsHKZYY" allowfullscreen></iframe>
         </div>
       </div>
     </section>
 
-    <div class="tooltip" id="tooltip">
-      <span class="tooltip-text"></span>
-    </div>
+    <section id="composition" class="portfolio-section">
+      <h2>Composition</h2>
+      <p>Original music exploring emotion and interactive storytelling</p>
+      <div class="spotify-grid">
+        <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A1HXmolUNgTR76KCydTJU8z" height="380"></iframe>
+        <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A4pn6uhi6Rn2Vlu5uRbabCC" height="380"></iframe>
+      </div>
+    </section>
+
+    <section id="contact" class="portfolio-section">
+      <h2>Get In Touch</h2>
+      <p>Available for sound design and composition commissions</p>
+      <div class="contact-info">
+        <a href="mailto:v.panaite97@gmail.com" class="contact-link">Email</a>
+        <a href="https://www.linkedin.com/in/vlad-p-53164a196/" class="contact-link">LinkedIn</a>
+        <a href="assets/cv/Vlad_Panaite_CV.pdf" class="contact-link">CV</a>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Vlad Panaite. All rights reserved.</p>
+    </footer>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

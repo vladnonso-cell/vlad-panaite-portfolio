@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vlad Panaite | Data Visualization</title>
+  <title>Vlad Panaite | Sound Design & Composition</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="canvas-container"></div>
+  <canvas id="waveCanvas"></canvas>
 
-  <div class="ui-overlay">
+  <div class="container">
     <header>
       <div class="logo">VP</div>
       <nav>
@@ -19,34 +19,32 @@
       </nav>
     </header>
 
-    <div class="info-panel">
-      <div class="info-content">
-        <h1 class="title">VLAD PANAITE</h1>
-        <p class="subtitle">Sound Designer & Composer</p>
-        <p class="description">Interactive audio design, composition, and sonic environments</p>
+    <section class="hero">
+      <h1>Vlad Panaite</h1>
+      <p class="subtitle">Sound Designer & Composer</p>
+      <p class="description">Interactive audio design, composition, and sonic environments</p>
 
-        <div class="interactive-zones">
-          <div class="zone zone-1" data-info="Sound Design | Games & Interactive | 3 Projects">
-            <span class="zone-label">SOUND DESIGN</span>
-          </div>
-          <div class="zone zone-2" data-info="Composition | Original Music | .Pierrot. Project">
-            <span class="zone-label">COMPOSITION</span>
-          </div>
-          <div class="zone zone-3" data-info="Based in London & Rome | Available for Commissions">
-            <span class="zone-label">CONTACT</span>
-          </div>
+      <div class="zones">
+        <div class="zone" data-info="Sound Design | Games & Interactive | 3 Video Projects">
+          <div class="zone-number">01</div>
+          <div class="zone-title">SOUND DESIGN</div>
+        </div>
+        <div class="zone" data-info="Composition | Original Music | .Pierrot. Project">
+          <div class="zone-number">02</div>
+          <div class="zone-title">COMPOSITION</div>
+        </div>
+        <div class="zone" data-info="London & Rome | Available for Commissions">
+          <div class="zone-number">03</div>
+          <div class="zone-title">CONTACT</div>
         </div>
       </div>
+    </section>
 
-      <div class="tooltip">
-        <div class="tooltip-content"></div>
-      </div>
+    <div class="tooltip" id="tooltip">
+      <span class="tooltip-text"></span>
     </div>
-
-    <div class="data-stream" id="dataStream"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

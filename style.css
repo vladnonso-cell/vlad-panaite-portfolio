@@ -7,50 +7,43 @@
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 body {
-  font-family: 'Courier New', monospace;
-  background: #000000;
-  color: #ffffff;
-  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  background: #ffffff;
+  color: #000000;
 }
 
-#canvas-container {
+#waveCanvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: 0.6;
 }
 
-.ui-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 100;
+.container {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  position: absolute;
-  top: 2rem;
-  left: 0;
-  right: 0;
-  padding: 0 2rem;
+  padding: 2rem 4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  pointer-events: auto;
-  z-index: 200;
+  border-bottom: 1px solid #000000;
 }
 
 .logo {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 2px;
 }
 
@@ -60,14 +53,14 @@ nav {
 }
 
 .nav-link {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
-  cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  cursor: pointer;
 }
 
 .nav-link::after {
@@ -77,7 +70,7 @@ nav {
   left: 0;
   width: 0;
   height: 1px;
-  background: #00ff00;
+  background: #0066ff;
   transition: width 0.3s ease;
 }
 
@@ -85,147 +78,134 @@ nav {
   width: 100%;
 }
 
-.info-panel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
   text-align: center;
-  pointer-events: auto;
-  z-index: 150;
 }
 
-.info-content {
-  max-width: 800px;
-}
-
-.title {
-  font-size: 48px;
-  font-weight: bold;
-  letter-spacing: 3px;
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -1px;
   margin-bottom: 1rem;
-  text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
 }
 
 .subtitle {
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 1px;
   margin-bottom: 1rem;
-  opacity: 0.8;
+  opacity: 0.7;
   text-transform: uppercase;
 }
 
 .description {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
-  margin-bottom: 3rem;
-  opacity: 0.7;
+  margin-bottom: 4rem;
+  max-width: 500px;
+  opacity: 0.6;
 }
 
-.interactive-zones {
+.zones {
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  gap: 3rem;
   flex-wrap: wrap;
+  max-width: 1000px;
 }
 
 .zone {
-  width: 140px;
-  height: 140px;
-  border: 1px solid #00ff00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 180px;
+  padding: 2rem;
+  border: 1px solid #000000;
+  text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(0, 255, 0, 0.02);
+  background: rgba(255, 255, 255, 0.7);
   position: relative;
-  pointer-events: auto;
 }
 
 .zone::before {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid #00ff00;
-  animation: pulse 2s infinite;
+  border: 2px solid #0066ff;
   opacity: 0;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+  transition: opacity 0.3s ease;
 }
 
 .zone:hover {
-  box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.5);
-  background: rgba(0, 255, 0, 0.05);
+  background: rgba(0, 102, 255, 0.05);
+  border-color: #0066ff;
 }
 
-.zone-label {
-  font-size: 10px;
+.zone:hover::before {
+  opacity: 1;
+}
+
+.zone-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0066ff;
+  margin-bottom: 1rem;
+}
+
+.zone-title {
+  font-size: 12px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-align: center;
-  line-height: 1.4;
+  font-weight: 600;
 }
 
 .tooltip {
   position: fixed;
   pointer-events: none;
-  font-size: 10px;
-  letter-spacing: 1px;
+  font-size: 12px;
   background: rgba(0, 0, 0, 0.9);
-  border: 1px solid #00ff00;
+  color: #0066ff;
   padding: 0.8rem 1rem;
-  max-width: 300px;
+  border: 1px solid #0066ff;
   opacity: 0;
-  transition: all 0.2s ease;
-  z-index: 300;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  letter-spacing: 0.5px;
+  max-width: 250px;
 }
 
 .tooltip.active {
   opacity: 1;
 }
 
-.tooltip-content {
-  color: #00ff00;
-  line-height: 1.6;
-}
-
-.data-stream {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  right: 2rem;
-  font-size: 9px;
-  color: rgba(0, 255, 0, 0.2);
-  line-height: 1.4;
-  max-height: 200px;
-  overflow: hidden;
-  pointer-events: none;
-  white-space: pre-wrap;
-  word-break: break-all;
-  font-family: monospace;
+.tooltip-text {
+  display: block;
 }
 
 @media (max-width: 768px) {
-  .title {
-    font-size: 28px;
-  }
-
-  .interactive-zones {
-    gap: 2rem;
-  }
-
-  .zone {
-    width: 100px;
-    height: 100px;
+  header {
+    padding: 1.5rem;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   nav {
     gap: 1rem;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .zones {
+    gap: 1rem;
+  }
+
+  .zone {
+    width: 140px;
+    padding: 1.5rem;
   }
 }

@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vlad Panaite — Sound Designer & Composer</title>
-  <meta name="description" content="Sound design and composition for interactive media.">
+  <title>Vlad Panaite | Data Visualization</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,8 +11,8 @@
     <div class="logo">VP</div>
     <nav>
       <ul>
-        <li><a href="sound-design.html">Sound Design</a></li>
-        <li><a href="composition.html">Composition</a></li>
+        <li><a href="#sound-design">Sound Design</a></li>
+        <li><a href="#composition">Composition</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -21,61 +20,144 @@
   </header>
 
   <main>
-    <section class="hero" id="hero">
-      <canvas id="canvas-bg"></canvas>
+    <section class="hero">
+      <div class="data-stream" id="dataStream"></div>
+
       <div class="hero-content">
         <h1>Vlad Panaite</h1>
-        <p class="tagline">Crafting sonic environments at the intersection of music, technology, and emotion.</p>
-        <div class="cta-buttons">
-          <a href="sound-design.html" class="btn">Explore</a>
+        <p class="subtitle">Sound Designer · Composer</p>
+
+        <div class="hotspots">
+          <div class="hotspot" data-section="sound-design">
+            <div class="hotspot-label">001</div>
+            <div class="hotspot-number">—</div>
+            <div class="hotspot-content">
+              <div class="hotspot-text">Sound Design | Interactive Audio | Cinematic</div>
+            </div>
+            <a href="#sound-design" class="hotspot-link">→ Explore</a>
+          </div>
+
+          <div class="hotspot" data-section="composition">
+            <div class="hotspot-label">002</div>
+            <div class="hotspot-number">—</div>
+            <div class="hotspot-content">
+              <div class="hotspot-text">Composition | .Pierrot. Project | Original Music</div>
+            </div>
+            <a href="#composition" class="hotspot-link">→ Explore</a>
+          </div>
+
+          <div class="hotspot" data-section="about">
+            <div class="hotspot-label">003</div>
+            <div class="hotspot-number">—</div>
+            <div class="hotspot-content">
+              <div class="hotspot-text">Working across games, interactive experiences, and contemporary art.</div>
+            </div>
+            <a href="#about" class="hotspot-link">→ About</a>
+          </div>
+
+          <div class="hotspot" data-section="contact">
+            <div class="hotspot-label">004</div>
+            <div class="hotspot-number">—</div>
+            <div class="hotspot-content">
+              <div class="hotspot-text">Get in touch for collaborations and commissions.</div>
+            </div>
+            <a href="#contact" class="hotspot-link">→ Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sound-design">
+      <h2>Sound Design</h2>
+      <p>Cinematic soundscaping, interactive audio design, and adaptive music systems across game engines and multimedia platforms.</p>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <h3>Cinematic & Game Reel</h3>
+          <p>Dynamic soundscaping and foley design for cinematic sequences and interactive game environments.</p>
+          <div class="media-container">
+            <iframe src="https://www.youtube.com/embed/SUxWWOyYUNM" allowfullscreen="" allow="autoplay"></iframe>
+          </div>
+        </div>
+
+        <div class="portfolio-item">
+          <h3>Plyphone</h3>
+          <p>Experimental exploration of abstract sonic textures and unconventional harmonies.</p>
+          <div class="media-container">
+            <iframe src="https://www.youtube.com/embed/Rz39gmXcXxc" allowfullscreen="" allow="autoplay"></iframe>
+          </div>
+        </div>
+
+        <div class="portfolio-item">
+          <h3>Interactive Audio</h3>
+          <p>Adaptive music systems and real-time parameter modulation for interactive experiences.</p>
+          <div class="media-container">
+            <iframe src="https://www.youtube.com/embed/78LcDsHKZYY" allowfullscreen="" allow="autoplay"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="composition">
+      <h2>Composition</h2>
+      <p>Original music exploring the intersection of composition, sound design, and emotional expression.</p>
+
+      <div style="max-width: 700px;">
+        <h3 style="font-size: 14px; margin: 2rem 0 1rem; letter-spacing: 1px;">.Pierrot. — Artist Project</h3>
+        <p>A musical exploration into dreams and emotional landscapes. Investigating how intricate sound design and unconventional harmonies communicate feelings and internal worlds.</p>
+
+        <div class="spotify-grid">
+          <div class="spotify-container">
+            <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A1HXmolUNgTR76KCydTJU8z" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          </div>
+          <div class="spotify-container">
+            <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A4pn6uhi6Rn2Vlu5uRbabCC" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="about">
       <h2>About</h2>
-      <p>
-        Sound designer and composer working across games, interactive experiences, and contemporary art. I combine composition, sound design, and emerging technologies to create immersive sonic worlds.
-      </p>
-    </section>
+      <p>Sound designer and composer based in London and Rome. I work across games, interactive experiences, and contemporary art, combining composition, sound design, and emerging technologies to create emotionally driven sonic environments.</p>
 
-    <section id="skills">
-      <h2>Tools</h2>
-      <div class="skills">
-        <div class="skill-group">
-          <h3>DAW</h3>
-          <p>Ableton<br>ProTools<br>Reaper</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; max-width: 900px;">
+        <div>
+          <h3 style="font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem;">DAW</h3>
+          <p style="font-size: 10px; line-height: 1.8;">Ableton<br>ProTools<br>Reaper</p>
         </div>
-        <div class="skill-group">
-          <h3>Engines</h3>
-          <p>Unity<br>Unreal Engine<br>Godot</p>
+        <div>
+          <h3 style="font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem;">Engines</h3>
+          <p style="font-size: 10px; line-height: 1.8;">Unity<br>Unreal Engine<br>Godot</p>
         </div>
-        <div class="skill-group">
-          <h3>Middleware</h3>
-          <p>FMOD<br>Elias<br>Wwise</p>
+        <div>
+          <h3 style="font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem;">Middleware</h3>
+          <p style="font-size: 10px; line-height: 1.8;">FMOD<br>Elias<br>Wwise</p>
         </div>
       </div>
     </section>
 
     <section id="contact">
       <h2>Contact</h2>
-      <div class="contact-grid">
+      <p>Available for sound design and composition commissions. Get in touch to discuss your project.</p>
+
+      <div class="contact-info">
         <div>
           <div class="contact-method">
             <h3>Email</h3>
             <a href="mailto:v.panaite97@gmail.com">v.panaite97@gmail.com</a>
           </div>
-          <div class="contact-method">
+          <div class="contact-method" style="margin-top: 2rem;">
             <h3>LinkedIn</h3>
-            <a href="https://www.linkedin.com/in/vlad-p-53164a196/" target="_blank">Profile</a>
+            <a href="https://www.linkedin.com/in/vlad-p-53164a196/" target="_blank">linkedin.com/in/vlad-p-53164a196</a>
           </div>
-          <div class="contact-method">
+          <div class="contact-method" style="margin-top: 2rem;">
             <h3>CV</h3>
-            <a href="assets/cv/Vlad_Panaite_CV.pdf" download>Download</a>
+            <a href="assets/cv/Vlad_Panaite_CV.pdf" download>Download PDF</a>
           </div>
         </div>
         <div>
-          <p>Available for commissions and collaborations on sound design and original composition.</p>
+          <p style="margin-top: 0;">Interested in collaborations on original composition, interactive audio systems, and sound design for games and multimedia experiences.</p>
         </div>
       </div>
     </section>

@@ -1,0 +1,11 @@
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+.DS_Store
+node_modules/
+.env
+.env.local
+dist/
+build/

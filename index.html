@@ -9,44 +9,39 @@
 </head>
 <body>
   <header>
-    <div class="header-container">
-      <div class="logo">
-        <a href="index.html">V.</a>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="sound-design.html">Sound Design</a></li>
-          <li><a href="composition.html">Composition</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <button class="mobile-menu-btn">☰</button>
+    <div class="logo">
+      <a href="index.html">VLAD PANAITE</a>
     </div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="sound-design.html">Sound Design</a></li>
+        <li><a href="composition.html">Composition</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-btn">☰</button>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="hero">
+      <canvas id="canvas-bg"></canvas>
       <div class="hero-content">
         <h1>Vlad Panaite</h1>
         <p class="tagline">I design soundscapes that blur the line between dreams and reality.</p>
         <div class="cta-buttons">
-          <a href="#contact" class="btn">Get In Touch</a>
-          <a href="sound-design.html" class="btn secondary">View Sound Design</a>
+          <a href="sound-design.html" class="btn">Sound Design</a>
+          <a href="composition.html" class="btn secondary">Composition</a>
         </div>
-        <p style="color: var(--text-muted); margin-top: 2rem; font-size: 0.95rem;">London | Rome</p>
+        <p style="color: var(--text-secondary); margin-top: 3rem; font-size: 0.9rem; letter-spacing: 1px;">LONDON | ROME</p>
       </div>
     </section>
 
     <section id="about">
       <h2>About</h2>
-      <div class="about-grid">
-        <div class="bio-text">
-          <p>
-            Working across games, interactive experiences, and contemporary art, I combine <strong>composition, sound design, and emerging technologies</strong> to create emotionally driven worlds. My work explores the intersection of music and interactive media, crafting immersive sonic environments that resonate with audiences.
-          </p>
-        </div>
-      </div>
+      <p class="about-text">
+        Working across games, interactive experiences, and contemporary art, I combine <strong>composition, sound design, and emerging technologies</strong> to create emotionally driven worlds. My work explores the intersection of music and interactive media, crafting immersive sonic environments that resonate with audiences.
+      </p>
     </section>
 
     <section id="skills">
@@ -70,7 +65,7 @@
     <section id="contact">
       <h2>Contact</h2>
       <div class="contact-grid">
-        <div class="contact-info">
+        <div>
           <div class="contact-method">
             <h3>Email</h3>
             <a href="mailto:v.panaite97@gmail.com">v.panaite97@gmail.com</a>
@@ -84,9 +79,11 @@
             <a href="assets/cv/Vlad_Panaite_CV.pdf" download>Download CV (PDF)</a>
           </div>
         </div>
-        <div class="contact-cta">
-          <p>Looking for a sound designer or composer for your project? Get in touch—I'm always interested in collaborating on meaningful work.</p>
-          <a href="mailto:v.panaite97@gmail.com" class="btn">Send Email</a>
+        <div>
+          <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8;">
+            Looking for a sound designer or composer for your project? Let me know about your vision—I'm always interested in collaborating on meaningful work.
+          </p>
+          <a href="mailto:v.panaite97@gmail.com" class="btn" style="display: inline-block; margin-top: 1.5rem;">Send Email</a>
         </div>
       </div>
     </section>
@@ -96,6 +93,7 @@
     <p>&copy; 2026 Vlad Panaite. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

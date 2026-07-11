@@ -9,68 +9,51 @@
 </head>
 <body>
   <header>
-    <div class="header-container">
-      <div class="logo">
-        <a href="index.html">V.</a>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="sound-design.html">Sound Design</a></li>
-          <li><a href="composition.html">Composition</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </nav>
-      <button class="mobile-menu-btn">☰</button>
+    <div class="logo">
+      <a href="index.html">VLAD PANAITE</a>
     </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">About</a></li>
+        <li><a href="sound-design.html">Sound Design</a></li>
+        <li><a href="composition.html">Composition</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-btn">☰</button>
   </header>
 
   <main>
-    <section class="hero" style="min-height: 60vh; padding-top: 4rem;">
-      <div class="hero-content">
-        <h1>Composition</h1>
-        <p class="tagline">Original music and sonic storytelling.</p>
-      </div>
-    </section>
+    <section style="padding-top: 8rem;">
+      <h2>Composition</h2>
 
-    <section>
-      <h2>Featured Project</h2>
-
-      <div class="composition-project">
+      <div class="portfolio-item" style="margin-top: 3rem; max-width: 900px;">
         <h3>.Pierrot. — Artist Project</h3>
         <p>
-          <strong>.Pierrot. is a musical project that revolves around the discovery of dreams through the eyes of a sad clown travelling in oniric landscapes.</strong> By chasing the absurd and the bizarre, the musical practice is based on intricate sound design and peculiar harmonies.
+          A musical project exploring the discovery of dreams through the eyes of a melancholic traveller navigating surreal landscapes. By embracing the absurd and bizarre, the practice is grounded in intricate sound design and unconventional harmonies.
         </p>
         <p>
-          The project started as an introspection but developed towards a research into exploring and discovering musical formulas that explain feelings, emotions, and the secretive internal world that guide us. Using music as an alchemist would.
+          What began as personal introspection evolved into research on musical formulas that articulate emotions and the secretive internal world guiding us. Using music as an alchemist would.
         </p>
 
-        <div class="composition-media">
-          <div class="spotify-container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+          <div class="media-container">
             <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A1HXmolUNgTR76KCydTJU8z" title="Drops of Blue — .Pierrot. on Spotify" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
           </div>
-          <div class="spotify-container">
+          <div class="media-container">
             <iframe src="https://open.spotify.com/embed?uri=spotify%3Aalbum%3A4pn6uhi6Rn2Vlu5uRbabCC" title="Greengrass & Purplefog — .Pierrot. on Spotify" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
           </div>
         </div>
 
-        <p style="margin-top: 2rem; color: var(--text-muted); font-size: 0.95rem; text-align: center;">
-          Listen on Spotify: <strong>Drops of Blue</strong> · <strong>Greengrass & Purplefog</strong>
+        <p style="margin-top: 2rem; font-size: 0.95rem; color: var(--text-secondary);">
+          <strong>Available on:</strong> Spotify · Apple Music · YouTube Music · Bandcamp
         </p>
       </div>
 
-      <div style="margin-top: 4rem; padding: 2rem; background: rgba(74, 232, 76, 0.1); border-left: 3px solid var(--accent-green); border-radius: 2px;">
-        <p style="color: var(--text-muted); font-size: 0.95rem;">
-          <strong>Available on all major streaming platforms:</strong> Spotify, Apple Music, YouTube Music, Bandcamp, and more. Follow .Pierrot. for upcoming releases and sonic explorations.
-        </p>
-      </div>
-    </section>
-
-    <section style="border-bottom: none;">
-      <div style="text-align: center; padding: 2rem; background: rgba(51, 51, 51, 0.3); border-radius: 4px;">
-        <h3 style="color: var(--text-light); margin-bottom: 1rem;">Commission Original Music</h3>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Interested in original composition work for your project? I create bespoke music for games, documentaries, installations, and multimedia experiences.</p>
-        <a href="index.html#contact" class="btn">Discuss Your Project</a>
+      <div style="margin-top: 5rem; padding: 3rem 2rem; border: 1px solid rgba(0, 255, 255, 0.3); text-align: center;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Commission Original Music</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Crafting bespoke compositions for games, documentaries, installations, and multimedia experiences.</p>
+        <a href="index.html#contact" class="btn">Start a Project</a>
       </div>
     </section>
   </main>
@@ -79,6 +62,7 @@
     <p>&copy; 2026 Vlad Panaite. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
